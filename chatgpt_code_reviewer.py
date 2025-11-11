@@ -8,7 +8,7 @@ import webbrowser
 import openai
 from tqdm import tqdm
 
-openai.api_key = os.environ["OPENAI_KEY"]
+openai.api_key = os.environ["OPENAI_API_KEY"]
 PROMPT_TEMPLATE = f"Good code reviews look at the change itself and how it fits into the codebase. They will look through the clarity of the title and description and “why” of the change. They cover the correctness of the code, test coverage, functionality changes, and confirm that they follow the coding guides and best practices. Make a good code review of the following diffs suggesting improvements and refactors based on best practices as SOLID concepts when it's worthy, please stop answering anything until I give you the diff in the conversation."
 def add_code_tags(text):
     # Find all the occurrences of text surrounded by backticks
@@ -49,7 +49,7 @@ def generate_comment(diff, chatbot_context):
     retries = 3
     for attempt in range(retries):
         try:
-            response = openai.ChatCompletion.create(
+            response = openai.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=chatbot_context,
                 n=1,
